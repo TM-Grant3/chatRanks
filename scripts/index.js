@@ -23,7 +23,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
   const message = data.message;
   data.cancel = true;
   if (!message.startsWith("!")) {
-    world.sendMessage(`${getRanks(player)}, §e${player.name}: §f${message}`);
+    world.sendMessage(`§7[§r${getRanks(player).join("§8, ")}§7], §r§e${player.name}: §f${message}`);
   }
   player.runCommandAsync(`tellraw @a[tag=bot] {"rawtext":[{"text":"${player.name} |_-/\-_-/\-_| ${message}"}]}`);
 })
