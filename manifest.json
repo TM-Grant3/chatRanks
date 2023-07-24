@@ -1,1 +1,39 @@
+{
+  "format_version": 2,
 
+  "header": {
+    "name": "Chat ranks for hyde by grant",
+    "description": "Chat ranks with bot controllability",
+    "uuid": "0225129e-82b5-4f84-b2c8-5c76314aee06",
+    "version": [2, 0, 0],
+    "min_engine_version": [1, 19, 60]
+  },
+
+  "modules": [
+    {
+      "type": "data",
+      "description": "Behavior Module",
+      "uuid": "879049f2-4a21-4812-8b0d-ef0f1d45d2e2",
+      "version": [1, 0, 0]
+    },
+    {
+      "type": "script",
+      "description": "Gametest Module",
+      "language": "javascript",
+      "uuid": "1342a696-f2c0-45f6-b7b9-2fc34715d4af",
+      "entry": "scripts/index.js",
+      "version": [1, 0, 0]
+    }
+  ],
+
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.4.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.2.0-beta"
+    }
+  ]
+}
