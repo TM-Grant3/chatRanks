@@ -16,12 +16,38 @@ function getRanks(player) {
     return ranks.length == 0 ? [default_rank] : ranks;
 }
 
+function getScore(target, objective, useZero = true) {
+    try {
+        const oB = world.scoreboard.getObjective(objective);
+        if (typeof target == "string")
+            return oB.getScore(
+                oB.getParticipants().find((pT) => pT.displayName == target)
+            );
+        if (oB.getScore(target.scoreboardIdentity) == undefined) {
+          return oB.getScore(target.scoreboardIdentity);
+        } else {
+          return 0;
+        }
+    } catch {
+        return useZero ? 0 : NaN;
+    }
+}
+
 world.beforeEvents.chatSend.subscribe((data) => {
   const player = data.sender;
   const message = data.message;
-  data.cancel = true;
+  const msgCount = getScore(player, "msgCount");
+  if (msgCount >= 3) return player.sendMessage("§dSystem §f>> §cYou are sending messages too fast!");
   if (!message.startsWith("!")) {
     world.sendMessage(`§7[§r${getRanks(player).join("§8, ")}§r§7], §r§e${player.name}: §f${message}`);
   }
   player.runCommandAsync(`tellraw @a[tag=bot] {"rawtext":[{"text":"${player.name} |_-/\-_-/\-_| ${message}"}]}`);
+  player.runCommandAsync("scorboard players add @s msgCount 1");
+  data.cancel = true;
 })
+
+system.runInterval(() => {
+  for (const player of world.getPlayers()) {
+    player.runCommandAsync("scoreboard players set @s msgCount 0");
+  }
+}, 80);
