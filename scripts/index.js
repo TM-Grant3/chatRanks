@@ -42,7 +42,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
     world.sendMessage(`§7[§r${getRanks(player).join("§8, ")}§r§7], §r§e${player.name}: §f${message}`);
   }
   player.runCommandAsync(`tellraw @a[tag=bot] {"rawtext":[{"text":"${player.name} |_-/\-_-/\-_| ${message}"}]}`);
-  player.runCommandAsync("scorboard players add @s msgCount 1");
+  player.runCommandAsync("scoreboard players add @s msgCount 1");
   data.cancel = true;
 })
 
@@ -51,3 +51,4 @@ system.runInterval(() => {
     player.runCommandAsync("scoreboard players set @s msgCount 0");
   }
 }, 80);
+
