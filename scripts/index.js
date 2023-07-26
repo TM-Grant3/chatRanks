@@ -1,5 +1,4 @@
 import { world, system } from "@minecraft/server";
-import { ActionFormData } from "@minecraft/server-ui";
 
 function getRanks(player) {
     let rank_prefix = "rank:";
@@ -19,17 +18,10 @@ function getRanks(player) {
 function getScore(target, objective, useZero = true) {
     try {
         const oB = world.scoreboard.getObjective(objective);
-        if (typeof target == "string")
-            return oB.getScore(
-                oB.getParticipants().find((pT) => pT.displayName == target)
-            );
-        if (oB.getScore(target.scoreboardIdentity) == undefined) {
-          return oB.getScore(target.scoreboardIdentity);
-        } else {
-          return 0;
-        }
+        if (typeof target == "string") return oB.getScore(oB.getParticipants().find((pT) => pT.displayName == target));
+        return oB.getScore(target.scoreboardIdentity);
     } catch {
-        return useZero ? 0 : NaN;
+        return useZero ? 0: NaN;
     }
 }
 
@@ -51,4 +43,3 @@ system.runInterval(() => {
     player.runCommandAsync("scoreboard players set @s msgCount 0");
   }
 }, 80);
-
